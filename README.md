@@ -1,2 +1,2 @@
 # Trip Walk
-![alt text](https://github.com/chrisPiemonte/TripWalk/src/main/resources/semantic.png "krapfen")
+![alt text](https://raw.githubusercontent.com/chrisPiemonte/TripWalk/master/src/main/resources/semantic.png "krapfen")
