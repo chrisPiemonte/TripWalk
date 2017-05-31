@@ -3,6 +3,6 @@
   */
 object Hi {
 	def main(args: Array[String]) {
-		print("hello")
+		print("hello uaglioni")
 	}
 }
