@@ -42,7 +42,22 @@ object GraphFromRDF{
 
 		println(graph.edges.size)
 		println(graph.nodes.size)
-		graph.get("http://dbpedia.org/resource/New_Jersey_General_Assembly").edges.foreach(println)
+
+		val node: graph.NodeT = graph.get("http://dbpedia.org/resource/Isaac_Asimova")
+		val neighbors: Set[graph.NodeT] = graph.get("http://dbpedia.org/resource/Isaac_Asimova").outNeighbors
+
+		val edges = node.edges
+		edges.foreach(println)
+
+		println("\n\n")
+		val outEdge = edges.filter(_.from == node).toVector(0)
+		println(outEdge.value.from)
+		println("\n\n")
+
+		neighbors.foreach(println)
+		println("yo " + neighbors.toVector)
+		println("ciao: " + node.outDegree)
+		// println(x.toVector(2))
 	}
 
 }

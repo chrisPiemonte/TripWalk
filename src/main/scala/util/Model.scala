@@ -14,5 +14,12 @@ object Model {
 		val source: String
 		def get: Graph[String, LkDiEdge]
 	}
-	
+
+	trait SequenceGenerator {
+		val depth: Int
+		val numWalks: Int
+		val graph: Graph[String, LkDiEdge]
+		def get: Seq[Seq[String]]
+	}
+
 }
