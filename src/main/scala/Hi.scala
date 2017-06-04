@@ -10,6 +10,8 @@ object Hi {
 
 	def main(args: Array[String]) {
 
+		val x = for{ i <- List.range(0, 10) } yield i
+		println(x)
 
 		val inputFileName = args(0)
 		println(inputFileName)

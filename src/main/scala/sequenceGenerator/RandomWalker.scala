@@ -1,5 +1,7 @@
 package sequenceGenerator
 
+import java.util.Date
+
 import graphGenerator.GraphFromRDF
 import util.Model.SequenceGenerator
 
@@ -14,26 +16,33 @@ import scalax.collection.edge.LkDiEdge
 class RandomWalker (val graph: Graph[String, LkDiEdge], val depth: Int, val numWalks: Int) extends SequenceGenerator {
 
 	override def get: Seq[Seq[String]] = {
-		Seq(Seq(""))
+		for {
+			node <- graph.nodes.toList
+			i <- 0 until numWalks
+		} yield randomWalk(node, depth)
+
+		/*for (node <- graph.nodes.toList; i <- 0 until numWalks)
+			yield randomWalk(node, depth)*/
 	}
 
 
 	def randomWalk(node: Graph[String, LkDiEdge]#NodeT, depth: Int): Seq[String] = {
-
 		@tailrec
 		def randomWalkRec(node: Graph[String, LkDiEdge]#NodeT, depth: Int, acc: Seq[String]): Seq[String] = {
 			if (acc.size < depth) {
 				val source = node.value
-				val someEdge = getRandomOutEdge(node)
-				someEdge match {
+				val optionEdge = getRandomOutEdge(node)
+				optionEdge match {
 					case Some(actualEdge) =>
 						val arcLabel = actualEdge.label.toString
 						randomWalkRec(actualEdge.to, depth, acc :+ source :+ arcLabel)
-					case None => acc :+ source
+					case None =>
+						acc :+ source
 				}
-			} else acc
+			} else
+				acc
 		}
-
+		// println("starting on node: " + node.hashCode() + " " + node.value)
 		randomWalkRec(node, depth, Seq())
 	}
 
@@ -44,11 +53,10 @@ class RandomWalker (val graph: Graph[String, LkDiEdge], val depth: Int, val numW
 				.filter(_.from equals node)
 				.toVector
 			val randomIndex = new Random().nextInt(node.outDegree)
-			val randomEdge: Graph[String, LkDiEdge]#EdgeT = outEdges(randomIndex).value
+			val randomEdge = outEdges(randomIndex).value
 			Some(randomEdge)
-		} else {
+		} else
 			None
-		}
 	}
 
 
@@ -60,13 +68,31 @@ object RandomWalker {
 		val GeneratorFromRDF = new GraphFromRDF(args(0))
 		val graph = GeneratorFromRDF.get
 
-		val RanWalker = new RandomWalker(graph, 5, 5)
-
+		val RanWalker = new RandomWalker(graph, 3, 1)
+/*
 		val node = graph.get("http://dbpedia.org/resource/Isaac_Asimov")
-		val walk = RanWalker.randomWalk(node, 5)
+		// val walk = RanWalker.randomWalk(node, 4)
 
-		println(walk.size)
-		println(walk)
+		val startTime = new Date().getTime
+		println("Random Walks generation starting at "+ startTime)
+
+		val walks = RanWalker.get
+
+		val endTime = new Date().getTime
+		val totSec = (endTime-startTime) / 1000
+		println("Random Walks generation completed in " + totSec + " seconds")
+
+		println(walks.size)
+		println(walks)*/
+		var l = scala.collection.mutable.ArraySeq.empty[Seq[String]]
+
+		for (node <- graph.nodes.toList; i <- 0 until 3 ) {
+
+			l :+ RanWalker.randomWalk(node, 3)
+		}
+
+		println(l.size)
+		// g.foreach(println)
 	}
 
 }
