@@ -5,4 +5,4 @@
 
 2. Run:<pre>sbt assembly</pre>
 
-3. Run da jar:<pre>java -cp target/scala-2.11/TripWalk-assembly-1.0.jar graphGenerator.GraphFromRDF `<TTL file>`</pre>
+3. Run da jar:<pre>java -cp target/scala-2.11/TripWalk.jar Embed `<RDF file>`</pre>

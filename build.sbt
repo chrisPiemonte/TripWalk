@@ -9,5 +9,7 @@ libraryDependencies ++= List(
 	"org.scala-graph" %% "graph-core" % "1.11.3"
 )
 
+assemblyJarName in assembly := "TripWalk.jar"
+
 assemblyOption in assembly :=
 	(assemblyOption in assembly).value.copy(includeScala = true)
