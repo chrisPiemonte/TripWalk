@@ -13,7 +13,9 @@ object Writer {
 		val out  = new PrintWriter(file, "UTF-8")
 
 		def apply(walks: Seq[Seq[String]]): Unit = {
-			walks.foreach( walk => out.println(walkToString(walk)) )
+			walks
+				.filter(_.size > 1)
+				.foreach( walk => out.println(walkToString(walk)) )
 			out.close()
 		}
 

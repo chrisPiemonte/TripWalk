@@ -38,11 +38,11 @@ object Embed {
 			case _ =>
 				Console.err.println(s"wrong parameters for: ${args.mkString(" ")}")
 				val string = """to run the jar do: java -cp name.jar Embed <sourceFile> <depth> <numWalks>
-				               | where:
-				               | <sourceFile> : file containing RDF triples
-				               | <depth> : length of each random walk (e.g. 5)
-				               | <numWalks> : number of walks generated for each node
-				             """
+					| where:
+				    | <sourceFile> : file containing RDF triples
+					| <depth> : length of each random walk (e.g. 5)
+					| <numWalks> : number of walks generated for each node
+					 """
 
 				Console.err.println(string)
 		}

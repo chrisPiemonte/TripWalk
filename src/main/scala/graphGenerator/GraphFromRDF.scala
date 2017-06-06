@@ -5,7 +5,8 @@ import scalax.collection.Graph
 import scalax.collection.edge.LkDiEdge
 import util.Model.GraphGenerator
 import org.apache.jena.util.FileManager
-import org.apache.jena.rdf.model.ModelFactory
+import org.apache.jena.rdf.model._
+import org.apache.jena.vocabulary.VCARD
 
 
 /**
@@ -15,17 +16,22 @@ class GraphFromRDF (val source: String) extends GraphGenerator {
 
 	override def get: Graph[String, LkDiEdge] = {
 		val in = FileManager.get().open(source)
-		val model = ModelFactory.createDefaultModel()
+		val modelWithLiteral = ModelFactory.createDefaultModel()
 		val readerType = getExtension(source) match {
 			case Some("ttl") => "TTL"
 			case Some("nt") => "NT"
 			case _ => "RDF/XML"
 		}
 
-		model.read(in, null, readerType)
-		val statements = model.listStatements().asScala
+		modelWithLiteral.read(in, null, readerType)
 
-		val edges = statements.map(stmt =>
+		val model = ModelFactory.createDefaultModel()
+		modelWithLiteral.listStatements().asScala.foreach(stmt => {
+			if (!stmt.getObject.isInstanceOf[Literal])
+				model.add(stmt)
+		})
+
+		val edges = model.listStatements().asScala.map(stmt =>
 			LkDiEdge(stmt.getSubject.toString, stmt.getObject.toString) (stmt.getPredicate.toString)
 		).toList
 
@@ -40,5 +46,6 @@ class GraphFromRDF (val source: String) extends GraphGenerator {
 	}
 
 }
+
 
 
