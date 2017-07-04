@@ -1,6 +1,0 @@
-jupyter
-numpy
-scikit-learn
-pandas
-plotly
-gensim
