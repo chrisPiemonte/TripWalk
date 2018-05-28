@@ -10,43 +10,43 @@ import util.Writer.WalksWriter
   */
 object Embed {
 
-	def main(args: Array[String]) {
+  def main(args: Array[String]) {
 
-		args match {
-			case Array(sourceFile, depth, numWalks) =>
-				val GraphGen = new GraphFromRDF(sourceFile)
-				val graph = GraphGen.get
-				val RanWalker = new RandomWalker(graph, depth.toInt, numWalks.toInt)
+    args match {
+      case Array(sourceFile, depth, numWalks) =>
+        val GraphGen = new GraphFromRDF(sourceFile)
+        val graph = GraphGen.get
+        val RanWalker = new RandomWalker(graph, depth.toInt, numWalks.toInt)
 
-				val startTime = new Date().getTime
-				println("Starting Random Walks generation . . .")
+        val startTime = new Date().getTime
+        println("Starting Random Walks generation . . .")
 
-				val walks = RanWalker.get
+        val walks = RanWalker.get
 
-				val endTime = new Date().getTime
-				val totSec = (endTime - startTime) / 1000.0
-				println("Completed in " + totSec + " seconds")
+        val endTime = new Date().getTime
+        val totSec = (endTime - startTime) / 1000.0
+        println("Completed in " + totSec + " seconds")
 
-				val outputFile = new File(sourceFile).getParent + "/embedding_" +
-					sourceFile.substring( sourceFile.lastIndexOf("/") + 1) + ".txt"
+        val outputFile = new File(sourceFile).getParent + "/embedding_" +
+          sourceFile.substring( sourceFile.lastIndexOf("/") + 1) + ".txt"
 
-				println("Writing on file " + outputFile + " . . .")
-				val Writer = new WalksWriter(outputFile)
-				Writer(walks)
-				println("Done")
+        println("Writing on file " + outputFile + " . . .")
+        val Writer = new WalksWriter(outputFile)
+        Writer(walks)
+        println("Done")
 
-			case _ =>
-				Console.err.println(s"wrong parameters for: ${args.mkString(" ")}")
-				val string = """to run the jar do: java -cp name.jar Embed <sourceFile> <depth> <numWalks>
-					| where:
-				    | <sourceFile> : file containing RDF triples
-					| <depth> : length of each random walk (e.g. 5)
-					| <numWalks> : number of walks generated for each node
-					 """
+      case _ =>
+        Console.err.println(s"wrong parameters for: ${args.mkString(" ")}")
+        val string = """to run the jar do: java -cp name.jar Embed <sourceFile> <depth> <numWalks>
+          | where:
+            | <sourceFile> : file containing RDF triples
+          | <depth> : length of each random walk (e.g. 5)
+          | <numWalks> : number of walks generated for each node
+           """
 
-				Console.err.println(string)
-		}
+        Console.err.println(string)
+    }
 
-	}
-	
+  }
+
 }

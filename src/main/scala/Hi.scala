@@ -8,54 +8,54 @@ import collection.JavaConverters._
   */
 object Hi {
 
-	def main(args: Array[String]) {
+  def main(args: Array[String]) {
 
-		val x = for{ i <- List.range(0, 10) } yield i
-		println(x)
+    val x = for{ i <- List.range(0, 10) } yield i
+    println(x)
 
-		val inputFileName = args(0)
-		println(inputFileName)
+    val inputFileName = args(0)
+    println(inputFileName)
 
-		val in = FileManager.get().open(inputFileName)
-		val model = ModelFactory.createDefaultModel()
-		model.read(in, null, "TTL")
-		model.listStatements()
+    val in = FileManager.get().open(inputFileName)
+    val model = ModelFactory.createDefaultModel()
+    model.read(in, null, "TTL")
+    model.listStatements()
 
-		val iter = model.listStatements().asScala
-		iter.foreach(print)
-		println("\n\nciao\n\n")
-		iter.foreach(print)
-		/*
-		println("\n\nstarting")
-		while (iter.hasNext){
-			val stmt = iter.nextStatement()
-			val subject = stmt.getSubject
-			val predicate = stmt.getPredicate
-			val obj = stmt.getObject
+    val iter = model.listStatements().asScala
+    iter.foreach(print)
+    println("\n\nciao\n\n")
+    iter.foreach(print)
+    /*
+    println("\n\nstarting")
+    while (iter.hasNext){
+      val stmt = iter.nextStatement()
+      val subject = stmt.getSubject
+      val predicate = stmt.getPredicate
+      val obj = stmt.getObject
 
-			print(subject.toString)
-			print(" " + predicate.toString + " ")
-			if(obj.isInstanceOf[Resource]){
-				print(obj.toString())
-			} else {
-				print(" \"" + obj.toString + "\"")
-			}
+      print(subject.toString)
+      print(" " + predicate.toString + " ")
+      if(obj.isInstanceOf[Resource]){
+        print(obj.toString())
+      } else {
+        print(" \"" + obj.toString + "\"")
+      }
 
-			println(" .")
+      println(" .")
 
-		}
-		*/
+    }
+    */
 
-		// val iterScala = iter.asScala
+    // val iterScala = iter.asScala
 
-		iter.map((x: Statement) => {
-			val s = x.getSubject.toString
-			val p = x.getPredicate.toString
-			val o = x.getObject.toString
+    iter.map((x: Statement) => {
+      val s = x.getSubject.toString
+      val p = x.getPredicate.toString
+      val o = x.getObject.toString
             s + " " + p +  " " + o
-		}).foreach(println)
+    }).foreach(println)
 
-		println(model.size())
-	}
+    println(model.size())
+  }
 
 }
