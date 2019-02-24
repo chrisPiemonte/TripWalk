@@ -1,4 +1,6 @@
-# Trip Walk <img src="https://raw.githubusercontent.com/chrisPiemonte/TripWalk/master/src/main/resources/tw.png" width="150">
+<p align="center"> <img src="https://raw.githubusercontent.com/chrisPiemonte/TripWalk/master/src/main/resources/tw.png" width="180"/></p>
+
+<h1 align="center"> Trip Walk </h1>
 
 Random Walk generation in a RDF graph. It produces paths inside the graph (aka random walks) for each RDF resource. The `<numWalks>` parameter stands for how many random walks will be generated starting from each resource and the `<depth>` parameter is the length of each random walk. Each random walk starts and ends on a RDF resource, but relationships are included in between.
 
